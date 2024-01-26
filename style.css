@@ -10,18 +10,18 @@ nav {
   justify-content: space-between;
   align-items: baseline;
 
-  background-color: #2c3e50; /* Dark blue-gray */
-  color: #ecf0f1; /* Light gray */
+  background-color: #2c3e50; 
+  color: #ecf0f1; 
   text-align: center;
   padding: 10px;
   position: sticky;
   top: 0;
   z-index: 100;
-  margin-bottom: 0; /* Set margin-bottom to 0 */
+  margin-bottom: 0; 
 }
 
 nav #title {
-  color: #ecf0f1; /* Light gray */
+  color: #ecf0f1; 
   margin: 0;
   font-size: 24px;
 }
@@ -40,19 +40,19 @@ nav li {
 
 nav a {
   text-decoration: none;
-  color: #ecf0f1; /* Light gray */
+  color: #ecf0f1; 
   font-size: 18px;
 }
 
 section {
-  min-height: calc(100vh - 60px); /* 60px is the assumed height of the navbar */
+  min-height: calc(100vh - 60px); 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 20px;
-  background-color: #ecf0f1; /* Light gray */
+  background-color: #ecf0f1; 
 }
 
 h2,
@@ -68,7 +68,7 @@ ul li {
   margin-bottom: 10px;
 }
 
-/* Optional: Add some styling for better aesthetics */
+
 nav a:hover {
   text-decoration: underline;
 }
@@ -76,7 +76,7 @@ nav a:hover {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px); /* Move items down to create a staggered effect */
+    transform: translateY(20px); 
   }
   to {
     opacity: 1;
@@ -85,17 +85,17 @@ nav a:hover {
 }
 
 #about ul li:nth-child(1) {
-  animation: fadeIn 1s ease-in-out 0.5s forwards; /* Delay the animation for the first item */
+  animation: fadeIn 1s ease-in-out 0.5s forwards; 
 }
 
 #about ul li:nth-child(2) {
-  animation: fadeIn 1s ease-in-out 1s forwards; /* Delay the animation for the second item */
+  animation: fadeIn 1s ease-in-out 1s forwards; 
 }
 
 #about ul li:nth-child(3) {
-  animation: fadeIn 1s ease-in-out 1.5s forwards; /* Delay the animation for the third item */
+  animation: fadeIn 1s ease-in-out 1.5s forwards; 
 }
 
 #about ul li:nth-child(4) {
-  animation: fadeIn 1s ease-in-out 2s forwards; /* Delay the animation for the fourth item */
+  animation: fadeIn 1s ease-in-out 2s forwards; 
 }
