@@ -23,5 +23,10 @@ urlpatterns = [
     path('',home,name='home'),
     path('login/',login_page,name='login_page'),
     path('signup/',signup_page,name='signup_page'),
+    path('logout/',logout_page,name='logout_page'),
+    path('booking/<id>',booking,name='booking'),
+    path('account/<id>',account,name='account'),
+    path('delete_account/<id>',delete_account,name='delete_account'),
+    path('booking/confirm/<id>/<id2>/',confirm,name='confirm'),
     
 ]
