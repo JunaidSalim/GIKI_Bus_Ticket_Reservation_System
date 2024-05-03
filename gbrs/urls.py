@@ -28,5 +28,5 @@ urlpatterns = [
     path('account/<id>',account,name='account'),
     path('delete_account/<id>',delete_account,name='delete_account'),
     path('booking/confirm/<id>/<id2>/',confirm,name='confirm'),
-    
+    path('booking/confirmed/<id>',render_pdf_view,name='render_pdf_view'),    
 ]
