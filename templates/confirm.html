@@ -1,0 +1,10 @@
+{% extends "index.html" %} {% block body%}
+
+<h3>Thanks for booking Ticket</h3>
+<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+  <a href="{% url 'render_pdf_view' ticket.pk %}" class="btn btn-success"
+    >Generate Ticket</a
+  >
+</div>
+
+{% endblock%}
