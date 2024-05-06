@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'gbrs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gbrs',
+        'NAME': 'dbms',
         'USER' : 'postgres',
         'PASSWORD':'1234',
         'HOST':'localhost'}
