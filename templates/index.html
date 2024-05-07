@@ -37,8 +37,12 @@
             <a class="nav-link" href="/account/{{user.pk}}">Account</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/tickets">Tickets</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
           </li>
+
           {% else %}
           <li class="nav-item">
             <a class="nav-link" href="/login">Login</a>
@@ -46,12 +50,13 @@
           <li class="nav-item">
             <a class="nav-link" href="/signup">Signup</a>
           </li>
+
           {% endif %}
         </ul>
       </div>
     </nav>
-    {% block body%} {% if user.is_authenticated %} Hello, {{user.first_name}}
-    {%endif%} {% for dests in destinations %}
+    {% block body %} {% if user.is_authenticated %} Hello, {{user.first_name}}
+    {% endif %} {% for dests in destinations %}
     <div class="card" style="width: 18rem">
       <img class="card-img-top" src="..." alt="Card image cap" />
       <div class="card-body">
@@ -59,9 +64,10 @@
           {{dests.from_destination}}-{{dests.to_destination}}
         </h5>
         <p class="card-text">{{dests.bus_location}}</p>
+        <p class="card-text">Tickets Left: {{dests.tickets}}</p>
         <a href="/booking/{{dests.pk}}" class="btn btn-primary">Book</a>
       </div>
     </div>
-    {% endfor %} {% endblock%}
+    {% endfor %} {% endblock %}
   </body>
 </html>
