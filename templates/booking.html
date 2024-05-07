@@ -1,19 +1,22 @@
-{% extends "index.html" %} {% block body%}
+{% extends "index.html" %} {% block body%} {% if messages %}
 
-<section class="container">
-  <h1>Ticket Details</h1>
-  <h3>From : {{dest.from_destination}}</h3>
-  <h3>To : {{dest.to_destination}}</h3>
-  <h3>Bus No : {{dest.bus_No}}</h3>
-  <h3>Location : {{dest.bus_location}}</h3>
-  <h3>Date : {{dest.date}}</h3>
-  <h3>User Name : {{user.first_name}} {{user.last_name}}</h3>
-  <h3>User Reg No : {{user.username}}</h3>
-  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-    <a href="confirm/{{dest.pk}}/{{user.pk}}" class="btn btn-success"
-      >Confirm Ticket</a
-    >
-  </div>
-</section>
+  {% for message in messages %} <div class="alert alert-danger" role="alert">{{message}}</div> {%endfor %} {%endif %}
 
-{% endblock%}
+  <section class="container">
+    <h1>Ticket Details</h1>
+    <h3>From : {{dest.from_destination}}</h3>
+    <h3>To : {{dest.to_destination}}</h3>
+    <h3>Bus No : {{dest.bus_No}}</h3>
+    <h3>Location : {{dest.bus_location}}</h3>
+    <h3>Date : {{dest.date}}</h3>
+    <h3>User Name : {{user.first_name}} {{user.last_name}}</h3>
+    <h3>User Reg No : {{user.username}}</h3>
+    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+      <a href="confirm/{{dest.pk}}" class="btn btn-success"
+        >Confirm Ticket</a
+      >
+    </div>
+  </section>
+
+  {% endblock%}
+</div>
