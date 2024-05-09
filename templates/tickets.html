@@ -1,0 +1,11 @@
+{% extends "index.html" %} {% block body %} {% for tick in tickets %}
+<div class="card" style="width: 18rem">
+  <img class="card-img-top" src="..." alt="Card image cap" />
+  <div class="card-body">
+    <h5 class="card-title">
+      {{ tick.dest_pk.from_destination }}-{{ tick.dest_pk.to_destination }}
+    </h5>
+    <p class="card-text">{{ tick.dest_pk.date }}</p>
+  </div>
+</div>
+{% endfor %} {% endblock %}
