@@ -20,7 +20,10 @@ from system.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home,name='home'),
+    # path('',home,name='home'),
+    path('',index,name='index'),
+    path('temp/',temp,name='temp'),
+    path('search/',search,name='search'),
     path('login/',login_page,name='login_page'),
     path('signup/',signup_page,name='signup_page'),
     path('tickets/',tickets,name='tickets'),

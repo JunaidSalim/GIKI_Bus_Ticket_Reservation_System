@@ -15,6 +15,20 @@ from django.db.models import Q
 from datetime import datetime
 
 # Create your views here.
+
+def temp(request):
+    return render(request,'temp.html')
+
+def index(request):
+    return render(request,'landingPage.html')
+
+def search(request):
+    now = datetime.now()
+    destinations = destination.objects.filter(
+        Q(date__gt=now.date()) | (Q(date=now.date(), time__gt=now.time())),tickets__gt=0
+    )
+    return render(request,'search.html',{"destinations" : destinations})
+
 @login_required(login_url='/login/') 
 def render_pdf_view(request,id):
     template_path = 'print.html'
@@ -51,7 +65,6 @@ def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(f"Username: {username}, Password: {password}")  # Debugging print
 
         if not User.objects.filter(username=username).exists():
             messages.error(request, 'Invalid username')
@@ -110,12 +123,18 @@ def account(request,id):
     if request.method == "POST":
         first_name = request.POST.get('firstname')
         last_name = request.POST.get('lastname')  
-        password = request.POST.get('password')
-        query_set.first_name = first_name
-        query_set.last_name = last_name
-        query_set.set_password(password)
-        query_set.save()
-        return redirect('/')
+        old_password = request.POST.get('oldpassword')
+        check = authenticate(request,username = request.user.username,password = old_password)
+        if check:
+            password = request.POST.get('password')
+            query_set.first_name = first_name
+            query_set.last_name = last_name
+            query_set.set_password(password)
+            query_set.save()
+            return redirect('/login')
+        else:
+            messages.error(request,"Invalid Old Password")
+            return redirect(f'/account/{request.user.pk}')
     context = {"account" : query_set}
     return render(request,'account.html',context)
 
@@ -129,6 +148,9 @@ def delete_account(request,id):
 
 @login_required(login_url='/login/')
 def confirm(request,id):
+    ticket_check = ticket.objects.filter(dest_pk = id,user_pk = request.user.pk)
+    if ticket_check.exists() and request.user.is_superuser==False:
+        return redirect('/')   
     user_instance = request.user
     dest_instance = get_object_or_404(destination, id=id)
     dest_instance.tickets = dest_instance.tickets -1 

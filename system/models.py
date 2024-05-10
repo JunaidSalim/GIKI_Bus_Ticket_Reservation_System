@@ -38,4 +38,3 @@ class ticket(models.Model):
     def __str__(self):
         return f"Ticket of {self.user_pk.username} for {self.dest_pk}"
 
-

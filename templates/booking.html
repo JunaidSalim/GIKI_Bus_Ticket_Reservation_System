@@ -1,22 +1,100 @@
-{% extends "index.html" %} {% block body%} {% if messages %}
+{% extends "landingPage.html" %} {% load static%} {%block body%}
+<body>
+  <!-- Container -->
+  <div
+    class="flex flex-col min-h-screen w-full items-center justify-center text-gray-600 bg-gray-50"
+  >
+    <div class="relative">
+      <!-- Register -->
 
-  {% for message in messages %} <div class="alert alert-danger" role="alert">{{message}}</div> {%endfor %} {%endif %}
-
-  <section class="container">
-    <h1>Ticket Details</h1>
-    <h3>From : {{dest.from_destination}}</h3>
-    <h3>To : {{dest.to_destination}}</h3>
-    <h3>Bus No : {{dest.bus_No}}</h3>
-    <h3>Location : {{dest.bus_location}}</h3>
-    <h3>Date : {{dest.date}}</h3>
-    <h3>User Name : {{user.first_name}} {{user.last_name}}</h3>
-    <h3>User Reg No : {{user.username}}</h3>
-    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-      <a href="confirm/{{dest.pk}}" class="btn btn-success"
-        >Confirm Ticket</a
+      <div
+        class="relative flex flex-col sm:w-[30rem] rounded-lg border border-gray-400 bg-white shadow-lg px-4"
       >
-    </div>
-  </section>
+        <div class="flex-auto justify-start p-6">
+          <!-- Logo -->
+          <div class="flex justify-center">
+            <img
+              src="{% static 'public/images/img_group_29.svg'%}"
+              alt="group 29"
+              class="h-[100px] w-[37%] pb-10"
+            />
+          </div>
+          <!-- /Logo -->
+          <div class="flex justify-center">
+            <h4 class="mb-2 font-medium text-gray-700 xl:text-xl">
+              Confirm Your Ticket!
+            </h4>
+          </div>
 
-  {% endblock%}
-</div>
+          <p class="mb-4 font-semibold mt-4 text-gray-500">Ticket Details</p>
+
+            <div class="flex items-center justify-between sm:block">
+              <div class="mb-4">
+                <p
+                  class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+                >
+                  From: <spac class="text-gray-700">{{dest.from_destination}}</spac>
+                </p>
+              </div>
+
+              <div class="mb-4">
+                <p
+                  class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+                >
+                  To: <spac class="text-gray-700">{{dest.to_destination}}</spac>
+                </p>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+              >
+                Bus Number: <spac class="text-gray-700">{{dest.bus_No}}</spac>
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+              >
+                Location: <spac class="text-gray-700">{{dest.bus_location}}</spac>
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+              >
+                Date: <spac class="text-gray-700">{{dest.date}}</spac>
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+              >
+                User Name: <spac class="text-gray-700">{{user.first_name}} {{user.last_name}}</spac>
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+              >
+                User Registration Number:
+                <spac class="text-gray-700">{{user.username}}</spac>
+              </p>
+            </div>
+
+            <button class="grid w-full cursor-pointer select-none rounded-md border border-green-500 bg-green-500 py-2 px-5 text-center align-middle text-sm text-white-A700 shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white">
+              <a href="confirm/{{dest.pk}}">Confirm</a>
+            </button>
+        </div>
+      </div>
+      <!-- /Register -->
+    </div>
+  </div>
+</body>
+
+{%endblock%}
