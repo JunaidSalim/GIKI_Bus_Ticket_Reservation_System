@@ -39,66 +39,91 @@
     <div class="flex w-full flex-col items-center bg-gray-50 px-3 pt-3 md:pb-5">
       <!-- header  -->
       <header class="container-sm w-[97%] md:p-5 md:w-full">
+            
+          {% if user.is_authenticated %}
         <div
           class="flex w-[100%] !items-center justify-between align-i md:w-full md:justify-end"
         >
-          
+          <ul class="mb-[29px] flex gap-[37px] md:hidden">
+            <li>
+              <a href="#">
+                <p class="size-xs text ui">Home</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="size-xs text ui">DashBoard</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="size-xs text ui">My Ticket</p>
+              </a>
+            </li>
+          </ul>
 
           <img
             src="{%static 'public/images/img_group_29.svg'%}"
             alt="group 29"
             class="h-[100px] w-[37%] pb-10"
           />
-          {% if user.is_authenticated %}
-          <div class="flex gap-7 md:w-full justify-end">
-            
-            <a
-              class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
-              href="/"
-              >Home</a>
-            <a
-              class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
-              href="/search"
-              >Dashboard</a>
 
-            <a
-              class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
-              href="/tickets"
-              >My Tickets</a>
-            <a
+          <div class="flex gap-7 md:w-full justify-end">
+          <a
               class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
               href="/account/{{user.pk}}"
               >Account</a>
-            
-            <a
+
+          <a
               class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:size-sm"
               href="/logout"
               >Log Out</a
             >
-          {% else %}
-          <div class="flex gap-7 md:w-full justify-end">
-            <a
-            class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
-            href="/"
-            >Home</a>
-            <a
-              class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
-              href="/search"
-              >Dashboard</a>
-            <a
-              class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
-              href="/login/"
-              >Sign In</a
-            >
-
-            <a
-              class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:size-sm"
-              href="/signup/"
-              >Sign Up</a
-            >
-          </div>
-          {%endif%}
+          </div>      
         </div>
+          {% else %}
+        <div
+          class="flex w-[100%] !items-center justify-between align-i md:w-full md:justify-end"
+        >
+          <ul class="mb-[29px] flex gap-[37px] md:hidden">
+            <li>
+              <a href="#">
+                <p class="size-xs text ui">Book Now</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="size-xs text ui">Bus Schedule</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <p class="size-xs text ui">Destinations</p>
+              </a>
+            </li>
+          </ul>
+
+          <img
+            src="{%static 'public/images/img_group_29.svg'%}"
+            alt="group 29"
+            class="h-[100px] w-[37%] pb-10"
+          />
+
+          <div class="flex gap-7 md:w-full justify-end">
+          <a
+            class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:!size-sm"
+            href="./signIn.html"
+            >Sign In</a
+          >
+
+          <a
+            class="square fill size-md mb-7 button ui min-w-[100px] self-end bg-light_blue-900 !text-white-A700 sm:size-sm"
+            href="./signUp.html"
+            >Sign Up</a
+          >
+          </div>      
+        </div>
+          {%endif%}
       </header>
       {% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %}
       {%block body%}

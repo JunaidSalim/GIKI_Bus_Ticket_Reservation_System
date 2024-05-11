@@ -133,7 +133,7 @@ AUTHENTICATION_BACKENDS = [
     # Add other authentication backends if needed
 ]
 
-NPM_BIN_PATH = "/usr/bin/npm"
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
