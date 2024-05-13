@@ -102,9 +102,13 @@
                 <spac class="text-gray-700">{{user.email}}</spac>
               </p>
             </div>
-            <button class="grid w-full cursor-pointer select-none rounded-md border border-green-500 bg-green-500 py-2 px-5 text-center align-middle text-sm text-white-A700 shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white">
-              <a href="confirm/{{dest.pk}}">Confirm</a>
+            <form id="" action="confirm/" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="id" value = "{{dest.pk}}"/>
+            <button type="submit" class="grid w-full cursor-pointer select-none rounded-md border border-green-500 bg-green-500 py-2 px-5 text-center align-middle text-sm text-white-A700 shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white">
+              <a href="confirm/">Confirm</a>
             </button>
+          </form>
         </div>
       </div>
       <!-- /Register -->

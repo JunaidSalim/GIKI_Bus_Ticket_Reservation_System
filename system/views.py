@@ -16,6 +16,7 @@ from datetime import datetime
 from django.core.mail import send_mail
 from django.conf import settings
 import random
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 # data.ticket_no, data.from_destination, data.to_destination, data.regNo, data.name, data.bus_No, data.bus_location, data.date, data.time, data.driver_name, data.driver_number
@@ -65,27 +66,30 @@ def search(request):
 
 @login_required(login_url='/login/') 
 def render_pdf_view(request,id):
-    template_path = 'print.html'
-    ticket_set = ticket.objects.get(id=id)
-    user_set = User.objects.get(pk=ticket_set.user_pk.pk)
-    dest_set = destination.objects.get(id=ticket_set.dest_pk.pk)
-    
-    context = {'ticket': ticket_set,'User_set': user_set,'dest':dest_set}
-    # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'filename="{ticket_set.pk}-Ticket.pdf"'    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render(context)
+    referrer = request.META.get('HTTP_REFERER')
+    if referrer and (('booking/confirm/' in referrer) or ('tickets/' in referrer)):
+        template_path = 'print.html'
+        ticket_set = get_object_or_404(ticket, id=id)
+        user_set = User.objects.get(pk=ticket_set.user_pk.pk)
+        dest_set = destination.objects.get(id=ticket_set.dest_pk.pk)
+        
+        context = {'ticket': ticket_set,'User_set': user_set,'dest':dest_set}
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'filename="{ticket_set.pk}-Ticket.pdf"'    # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
 
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funny view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
+        # create a pdf
+        pisa_status = pisa.CreatePDF(
+        html, dest=response)
+        # if error then show some funny view
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
     # return render(request,'print.html')
-
+    else:
+        return HttpResponseForbidden("Access Denied: Invalid Request")
 
 def login_page(request):
     if request.method == 'POST':
@@ -175,7 +179,8 @@ def booking(request,id):
     return render(request,'booking.html',context)
 
 @login_required(login_url='/login/')
-def account(request,id):
+def account(request):
+    id = request.user.pk
     query_set = User.objects.get(id=id)
     if request.method == "POST":
         first_name = request.POST.get('firstname')
@@ -197,14 +202,16 @@ def account(request,id):
 
 
 @login_required(login_url='/login/')
-def delete_account(request,id):
+def delete_account(request):
+    id = request.user.pk
     query_set = User.objects.get(id=id)
     query_set.delete()
     return redirect('/')
 
 
 @login_required(login_url='/login/')
-def confirm(request,id):
+def confirm(request):
+    id = request.POST.get('id')
     ticket_check = ticket.objects.filter(dest_pk = id,user_pk = request.user.pk)
     if ticket_check.exists() and request.user.is_superuser==False:
         return redirect('/')   
