@@ -13,11 +13,45 @@ from django.contrib.staticfiles import finders
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from datetime import datetime
+from django.core.mail import send_mail
+from django.conf import settings
+import random
 
 # Create your views here.
+# data.ticket_no, data.from_destination, data.to_destination, data.regNo, data.name, data.bus_No, data.bus_location, data.date, data.time, data.driver_name, data.driver_number
+def send_email(ticket):
+    ticket_no = ticket.pk
+    from_destination = ticket.dest_pk.from_destination
+    to_destination  = ticket.dest_pk.to_destination
+    regNo = ticket.user_pk.username
+    name = ticket.user_pk.first_name + " " + ticket.user_pk.last_name
+    bus_No = ticket.dest_pk.bus_No
+    bus_location = ticket.dest_pk.bus_location
+    date = ticket.dest_pk.date
+    time = ticket.dest_pk.time
+    driver_name = ticket.dest_pk.bus_driver.driver_name
+    driver_number = ticket.dest_pk.bus_driver.driver_number
+    email = ticket.user_pk.email
+    subject = "Ticket Confirmed"
+    message = """Thanks for Booking Ticket
+Your Ticket has been confirmed
 
-def temp(request):
-    return render(request,'temp.html')
+Ticket Details:
+Ticket no: {}
+From: {}
+To: {}
+Your Reg No: {}
+Your Name: {}
+Bus No: {}
+Bus Location: {}
+Date: {}
+Time: {}
+Driver Name: {}
+Driver Number: {}""".format(ticket_no, from_destination, to_destination, regNo, name, bus_No, bus_location, date, time, driver_name, driver_number)
+
+    from_email = settings.EMAIL_HOST
+    recipient_list = [email]
+    send_mail(subject, message, from_email, recipient_list)
 
 def index(request):
     return render(request,'landingPage.html')
@@ -39,8 +73,7 @@ def render_pdf_view(request,id):
     context = {'ticket': ticket_set,'User_set': user_set,'dest':dest_set}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="report.pdf"'
-    # find the template and render it.
+    response['Content-Disposition'] = f'filename="{ticket_set.pk}-Ticket.pdf"'    # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
 
@@ -54,29 +87,27 @@ def render_pdf_view(request,id):
     # return render(request,'print.html')
 
 
-def home(request):
-    now = datetime.now()
-    destinations = destination.objects.filter(
-        Q(date__gt=now.date()) | (Q(date=now.date(), time__gt=now.time())),tickets__gt=0
-    )
-    return render(request,'index.html',{"destinations" : destinations})
-
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        remember_me = request.POST.get('remember')
 
         if not User.objects.filter(username=username).exists():
             messages.error(request, 'Invalid username')
             return redirect('/login/')
 
         user = auth.authenticate(username=username, password=password)
-        print(user)
         if user is None:
             messages.error(request, 'Invalid Credentials')
             return redirect('/login/')
         else:
             login(request, user)
+            if not remember_me:
+                request.session.set_expiry(0)
+            else:
+                request.session.set_expiry(2592000)
+            messages.info(request,"Signed In")
             return redirect('/')
     else:
         return render(request, 'login.html')
@@ -85,6 +116,7 @@ def login_page(request):
 @login_required(login_url='/login/')
 def logout_page(request):
     logout(request)
+    messages.info(request,"Logged Out")
     return redirect('/')
 
 def signup_page(request):
@@ -93,16 +125,41 @@ def signup_page(request):
         last_name = request.POST.get('lastname')  
         username = request.POST.get('username')
         email = request.POST.get('email')
-        password = request.POST.get('password')
-        user  = User.objects.filter(username=username)
-        if user.exists():
-            messages.error(request,"RegNo Already exists")
-            return redirect('/signup/')
+        remember_me = request.POST.get('remember')
+        cont = "@giki.edu.pk"
+        
+        if cont in email:
+            password = str(random.randint(100000,999999))
+            user  = User.objects.filter(username=username)
+            if user.exists():
+                messages.error(request,"RegNo Already exists")
+                return redirect('/signup/')
+            else:
+                user = User.objects.create_user(first_name=first_name,last_name=last_name,email=email,username=username,password=password)
+                user.save()
+                if not remember_me:
+                    request.session.set_expiry(0)
+                else:
+                    request.session.set_expiry(2592000)
+                messages.info(request,"Account Created Successfully!\nYou will receive credentials shortly on provided Email")
+                subject = "Account Credentials"
+                message = """Thanks for Creating Account
+Your Account has been Created
+
+Account Details:
+Username/RegNo: {}
+Email: {}
+Password: {}
+
+You can change Password through Account after Sign In or through reset Password""".format(username,email,password)
+                from_email = settings.EMAIL_HOST
+                recipient_list = [email]
+                send_mail(subject, message, from_email, recipient_list)
+                
+                return redirect('/login/')
         else:
-            user = User.objects.create_user(first_name=first_name,last_name=last_name,email=email,username=username,password=password)
-            user.save()
-            messages.info(request,"Account Created Successfully")
-            return redirect('/login/') 
+            messages.error(request,"Kindly Enter GIKI Email(@giki.edu.pk)")
+            return redirect('/signup/') 
     else:
         return render(request, 'signup.html')
 
@@ -157,6 +214,8 @@ def confirm(request,id):
     dest_instance.save()
     ticket_instance = ticket(user_pk=user_instance, dest_pk=dest_instance)
     ticket_instance.save()
+    tick = get_object_or_404(ticket, dest_pk=id, user_pk=request.user.pk)
+    send_email(tick)
     return render(request,'confirm.html',{"ticket" : ticket_instance})    
 
 @login_required(login_url='/login/')

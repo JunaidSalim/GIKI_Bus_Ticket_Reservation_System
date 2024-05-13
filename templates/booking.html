@@ -28,6 +28,7 @@
 
           <p class="mb-4 font-semibold mt-4 text-gray-500">Ticket Details</p>
 
+            
             <div class="flex items-center justify-between sm:block">
               <div class="mb-4">
                 <p
@@ -69,12 +70,11 @@
                 Date: <spac class="text-gray-700">{{dest.date}}</spac>
               </p>
             </div>
-
             <div class="mb-4">
               <p
                 class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
               >
-                User Name: <spac class="text-gray-700">{{user.first_name}} {{user.last_name}}</spac>
+                Time: <spac class="text-gray-700">{{dest.time}}</spac>
               </p>
             </div>
 
@@ -82,11 +82,26 @@
               <p
                 class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
               >
-                User Registration Number:
+                Name: <spac class="text-gray-700">{{user.first_name}} {{user.last_name}}</spac>
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="mb-2 mr-2 inline-block text-xs font-medium uppercase text-black-900"
+              >
+                Registration Number:
                 <spac class="text-gray-700">{{user.username}}</spac>
               </p>
             </div>
-
+            <div class="mb-4">
+              <p
+                class="mb-2 mr-2 inline-block text-xs font-medium text-black-900"
+              >
+                Email
+                <spac class="text-gray-700">{{user.email}}</spac>
+              </p>
+            </div>
             <button class="grid w-full cursor-pointer select-none rounded-md border border-green-500 bg-green-500 py-2 px-5 text-center align-middle text-sm text-white-A700 shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white">
               <a href="confirm/{{dest.pk}}">Confirm</a>
             </button>

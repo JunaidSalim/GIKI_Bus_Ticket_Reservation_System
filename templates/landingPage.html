@@ -32,6 +32,12 @@
     type="text/css"
     href="{% static 'css/font.css'%}"
     />
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'css/tailwind.css'%}"
+    />
+
     {% tailwind_css %}
   </head>
   <body>
@@ -125,6 +131,11 @@
         </div>
           {%endif%}
       </header>
+      {% if messages %}
+      {% for message in messages %}  
+        <div class="bg-red-500 text-white px-4 py-2" role="alert">{{message}}
+        </div>{% endfor %}
+        {% endif %}
       {% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %}
       {%block body%}
 
@@ -608,7 +619,7 @@
               />
             </div>
           </div>
-          </div>
+
 
           {%endblock%}
       <!-- footer  -->
