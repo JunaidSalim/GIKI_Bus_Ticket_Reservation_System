@@ -28,6 +28,7 @@ class destination(models.Model):
     bus_location = models.CharField(max_length=100)
     tickets = models.IntegerField(default=30)
     bus_driver = models.ForeignKey(driver,on_delete=models.CASCADE)
+    price = models.IntegerField(default=300)
     def __str__(self) -> str:
         return self.from_destination+ "-" + self.to_destination
 
