@@ -173,7 +173,7 @@ def booking(request,id):
     dest = destination.objects.get(id=id)
     user_tickets = ticket.objects.filter(user_pk=request.user.pk, dest_pk__date=dest.date)
     if user_tickets.exists() and request.user.is_superuser==False:
-        messages.error(request,"You Cannot Book A Ticket Twice")
+        messages.error(request,"You Cannot Book Ticket for Same Date")
         return redirect('/')
     context = {"dest":dest}
     return render(request,'booking.html',context)
@@ -211,19 +211,23 @@ def delete_account(request):
 
 @login_required(login_url='/login/')
 def confirm(request):
-    id = request.POST.get('id')
-    ticket_check = ticket.objects.filter(dest_pk = id,user_pk = request.user.pk)
-    if ticket_check.exists() and request.user.is_superuser==False:
-        return redirect('/')   
-    user_instance = request.user
-    dest_instance = get_object_or_404(destination, id=id)
-    dest_instance.tickets = dest_instance.tickets -1 
-    dest_instance.save()
-    ticket_instance = ticket(user_pk=user_instance, dest_pk=dest_instance)
-    ticket_instance.save()
-    tick = get_object_or_404(ticket, dest_pk=id, user_pk=request.user.pk)
-    send_email(tick)
-    return render(request,'confirm.html',{"ticket" : ticket_instance})    
+    if request.method=="POST":
+        id = request.POST.get('id')
+        ticket_check = ticket.objects.filter(dest_pk = id,user_pk = request.user.pk)
+        if ticket_check.exists() and request.user.is_superuser==False:
+            return redirect('/')   
+        user_instance = request.user
+        dest_instance = get_object_or_404(destination, id=id)
+        dest_instance.tickets = dest_instance.tickets -1 
+        dest_instance.save()
+        ticket_instance = ticket(user_pk=user_instance, dest_pk=dest_instance)
+        ticket_instance.save()
+        tick = get_object_or_404(ticket, dest_pk=id, user_pk=request.user.pk)
+        send_email(tick)
+        return render(request,'confirm.html',{"ticket" : ticket_instance})    
+    else:
+        return HttpResponse("Server Error")
+        
 
 @login_required(login_url='/login/')
 def tickets(request):
