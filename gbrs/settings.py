@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'gbrs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbms',
-        'USER' : 'postgres',
-        'PASSWORD':'1234',
-        'HOST':'localhost'}
+        'NAME': 'DATABASE_NAME',
+        'USER' : 'USER',
+        'PASSWORD':'PASSWORD',
+        'HOST':'HOST'}
 }
 
 
@@ -143,10 +143,11 @@ STATIC_ROOT = os.path.join(BASE_DIR,'assets')
 
 
 # Email Settings
+#Use App Password in Gmail to setup this
 EMAIL_BACKEND = 'system.backend.email.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'junaidsaleem986@gmail.com'
-EMAIL_HOST_PASSWORD ='hzln gpcg fpep hskk'
+EMAIL_HOST_USER = 'EMAIL'
+EMAIL_HOST_PASSWORD ='PASSWORD' 
 
