@@ -133,7 +133,7 @@ AUTHENTICATION_BACKENDS = [
     # Add other authentication backends if needed
 ]
 
-NPM_BIN_PATH = "/usr/bin/npm"
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
@@ -143,9 +143,10 @@ STATIC_ROOT = os.path.join(BASE_DIR,'assets')
 
 
 # Email Settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'system.backend.email.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'junaidsaleem986@gmail.com'
-EMAIL_HOST_PASSWORD ='chtq opgn zqtw jlwn'
+EMAIL_HOST_PASSWORD ='hzln gpcg fpep hskk'
+
