@@ -1,2 +1,2 @@
-# DBMS_Project
+# GIKI_BUS_RESERVATION_SYSTEM
  
