@@ -18,6 +18,10 @@ from django.conf import settings
 import random
 from django.http import HttpResponseForbidden
 
+
+
+
+
 # Create your views here.
 # data.ticket_no, data.from_destination, data.to_destination, data.regNo, data.name, data.bus_No, data.bus_location, data.date, data.time, data.driver_name, data.driver_number
 def send_email(ticket):
@@ -232,6 +236,5 @@ def confirm(request):
 @login_required(login_url='/login/')
 def tickets(request):
     user_tickets = ticket.objects.filter(user_pk = request.user.pk)
-    print(user_tickets)
     return render(request,'tickets.html',{"tickets" : user_tickets})
         
