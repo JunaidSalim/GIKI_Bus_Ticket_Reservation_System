@@ -102,6 +102,10 @@ We appreciate your efforts to improve the project and look forward to your contr
 - [Muhammad Taimoor](https://github.com/taimoorgiki) - Database
 
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
 
 
 
