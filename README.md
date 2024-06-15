@@ -1,4 +1,4 @@
-# GIKI_BUS_TICKET_RESERVATION_SYSTEM
+# GIKI BUS TICKET RESERVATION SYSTEM
 This repository contains our Database Management System (DBMS) Project developed as a digital solution to address the challenges faced by GIKI students regarding bus ticket reservations. The current manual system at GIKI creates numerous hurdles for students seeking to book tickets. Our system aims to simplify the process for both students and administrators by providing a user-friendly interface for booking tickets and an admin panel for managing and maintaining ticket records.
 
 ## Features
