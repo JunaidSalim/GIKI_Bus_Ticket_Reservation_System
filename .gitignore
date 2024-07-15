@@ -12,9 +12,9 @@ static/
 __pycache__
 *.env
 .env
-node_modules/
+node_modules
 dist/
 *.css.map
 *.js.map
-.vscode/
+vscode
 *.log
